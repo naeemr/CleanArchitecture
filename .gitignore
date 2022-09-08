@@ -1,0 +1,23 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Application/bin/Debug/net5.0
+/Application/obj
+/Domain/bin/Debug/net5.0
+/Domain/obj
+/Infrastructure/bin/Debug/net5.0
+/Infrastructure/obj
+/IntegrationTest/bin/Debug/net5.0
+/IntegrationTest/obj
+/Service/bin/Debug/net5.0
+/Service/obj
+/UnitTest/obj
+/.vs/Service/DesignTimeBuild
+/.vs/Service/v17
+/Application/bin/Debug/net6.0
+/Domain/bin/Debug/net6.0
+/Infrastructure/bin/Debug/net6.0
+/IntegrationTest/bin/Debug/net6.0
+/Service/bin/Debug/net6.0
+/UnitTest/bin/Debug/net6.0

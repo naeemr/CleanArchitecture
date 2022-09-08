@@ -1,0 +1,17 @@
+﻿global using Application.Common.Interfaces;
+global using Application.Products;
+global using Domain;
+global using Domain.Entities;
+global using Infrastructure.Persistence;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.ChangeTracking;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Linq.Expressions;
+global using System.Reflection;
+global using System.Threading;
+global using System.Threading.Tasks;
