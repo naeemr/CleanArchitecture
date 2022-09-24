@@ -15,64 +15,21 @@ namespace UnitTest
             _tariffFactory = new TariffFactory();
         }
 
-        [Fact]
-        public void CalculateAnnualCost_CostPerKWh30mAndConsumption3500_800()
+        [Theory]
+        [InlineData(3500, 30, 800)]
+        [InlineData(4500, 30, 950)]
+        [InlineData(6000, 30, 1400)]
+        [InlineData(5000, 0, 800)]
+        [InlineData(-1, 30, 0)]
+        public void CalculateAnnualCost_MultipleConsumptions_ReturnAnnualCost(int consumption, decimal costPerKWh, decimal output)
         {
-            Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 30m);
+            Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, costPerKWh);
 
             var tariff = _tariffFactory.Create(product.Type);
 
-            var annualCost = tariff.CalculateAnnualCost(product, 3500);
+            var annualCost = tariff.CalculateAnnualCost(product, consumption);
 
-            annualCost.Should().Be(800);
-        }
-
-        [Fact]
-        public void CalculateAnnualCost_CostPerKWh30mAndConsumption4500_950()
-        {
-            Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 30m);
-
-            var tariff = _tariffFactory.Create(product.Type);
-
-            var annualCost = tariff.CalculateAnnualCost(product, 4500);
-
-            annualCost.Should().Be(950);
-        }
-
-        [Fact]
-        public void CalculateAnnualCost_CostPerKWh30mAndConsumption6000_1400()
-        {
-            Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 30m);
-
-            var tariff = _tariffFactory.Create(product.Type);
-
-            var annualCost = tariff.CalculateAnnualCost(product, 6000);
-
-            annualCost.Should().Be(1400);
-        }
-
-        [Fact]
-        public void CalculateAnnualCost_CostPerKWh0mAndConsumption5000_800()
-        {
-            Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 0m);
-
-            var tariff = _tariffFactory.Create(product.Type);
-
-            var annualCost = tariff.CalculateAnnualCost(product, 5000);
-
-            annualCost.Should().Be(800);
-        }
-
-        [Fact]
-        public void CalculateAnnualCost_CostPerKWh30mAndConsumptionMinusOne_0()
-        {
-            Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 30m);
-
-            var tariff = _tariffFactory.Create(product.Type);
-
-            var annualCost = tariff.CalculateAnnualCost(product, -1);
-
-            annualCost.Should().Be(0);
+            annualCost.Should().Be(output);
         }
     }
 }
