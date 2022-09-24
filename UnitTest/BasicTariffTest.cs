@@ -16,7 +16,7 @@ public class BasicTariffTest
     }
 
     [Fact]
-    public void Annual_Consumption_3500()
+    public void CalculateAnnualCost_CostPerKWh22mAndConsumption3500_830()
     {
         Product product = new("basic electricity tariff", TariffType.Basic, 0, 5m, 22m);
 
@@ -28,7 +28,7 @@ public class BasicTariffTest
     }
 
     [Fact]
-    public void Annual_Consumption_4500()
+    public void CalculateAnnualCost_CostPerKWh22mAndConsumption4500_1050()
     {
         Product product = new("basic electricity tariff", TariffType.Basic, 0, 5m, 22m);
 
@@ -40,7 +40,7 @@ public class BasicTariffTest
     }
 
     [Fact]
-    public void Annual_Consumption_6000()
+    public void CalculateAnnualCost_CostPerKWh22mAndConsumption6000_1380()
     {
         Product product = new("basic electricity tariff", TariffType.Basic, 0, 5m, 22m);
 
@@ -52,7 +52,7 @@ public class BasicTariffTest
     }
 
     [Fact]
-    public void Annual_Consumption_Zero_CostPerKWh()
+    public void CalculateAnnualCost_CostPerKWh0mAndConsumption2000_60()
     {
         Product product = new("basic electricity tariff", TariffType.Basic, 0, 5m, 0m);
 
@@ -64,7 +64,7 @@ public class BasicTariffTest
     }
 
     [Fact]
-    public void Annual_Consumption_Negative_Value()
+    public void CalculateAnnualCost_CostPerKWh22mAndConsumptionMinusOne_0()
     {
         Product product = new("basic electricity tariff", TariffType.Basic, 0, 5m, 22m);
 

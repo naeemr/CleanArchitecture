@@ -16,7 +16,7 @@ public class UnknownTariffTest
     }
 
     [Fact]
-    public void Annual_Consumption_Unknown_Tariff()
+    public void CalculateAnnualCost_CostPerKWh30mAndConsumption3500_0()
     {
         Product product = new("Packaged tariff", TariffType.Premium, 4000, 800m, 30m);
 

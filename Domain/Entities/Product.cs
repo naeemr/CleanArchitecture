@@ -1,6 +1,4 @@
-﻿using Domain.Tariffs;
-
-namespace Domain.Entities;
+﻿namespace Domain.Entities;
 
 public class Product : BaseEntity, IAggregateRoot
 {
@@ -19,7 +17,7 @@ public class Product : BaseEntity, IAggregateRoot
 
     private Product()
     {
-    
+
     }
 
     public Product(string name,

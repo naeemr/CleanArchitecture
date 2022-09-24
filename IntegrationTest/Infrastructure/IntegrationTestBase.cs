@@ -1,7 +1,6 @@
 using Infrastructure;
 using Infrastructure.Persistence;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace IntegrationTest.Infrastructure;
 

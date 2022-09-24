@@ -16,7 +16,7 @@ namespace UnitTest
         }
 
         [Fact]
-        public void Annual_Consumption_3500()
+        public void CalculateAnnualCost_CostPerKWh30mAndConsumption3500_800()
         {
             Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 30m);
 
@@ -28,7 +28,7 @@ namespace UnitTest
         }
 
         [Fact]
-        public void Annual_Consumption_4500()
+        public void CalculateAnnualCost_CostPerKWh30mAndConsumption4500_950()
         {
             Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 30m);
 
@@ -40,7 +40,7 @@ namespace UnitTest
         }
 
         [Fact]
-        public void Annual_Consumption_6000()
+        public void CalculateAnnualCost_CostPerKWh30mAndConsumption6000_1400()
         {
             Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 30m);
 
@@ -52,7 +52,7 @@ namespace UnitTest
         }
 
         [Fact]
-        public void Annual_Consumption_Zero_CostPerKWh()
+        public void CalculateAnnualCost_CostPerKWh0mAndConsumption5000_800()
         {
             Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 0m);
 
@@ -64,7 +64,7 @@ namespace UnitTest
         }
 
         [Fact]
-        public void Annual_Consumption_Negative_Value()
+        public void CalculateAnnualCost_CostPerKWh30mAndConsumptionMinusOne_0()
         {
             Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, 30m);
 

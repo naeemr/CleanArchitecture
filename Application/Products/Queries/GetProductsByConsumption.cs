@@ -27,7 +27,7 @@ public class GetProductsHandler : IGetProductsHandler
         }
 
         var products = await _productRepository.GetAllAsync();
-        
+
         if (products?.Any() == true)
         {
             foreach (var product in products)

@@ -1,6 +1,4 @@
-﻿using static Domain.Entities.Product;
-
-namespace Domain.Tariffs;
+﻿namespace Domain.Tariffs;
 
 public sealed class BasicTariff : ITariff
 {
