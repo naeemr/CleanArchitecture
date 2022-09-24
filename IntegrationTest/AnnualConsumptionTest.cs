@@ -15,13 +15,14 @@ public class AnnualConsumptionTest : IntegrationTestBase
     {
 
     }
-
-    [Fact]
-    public async Task Annual_Consumption_3500()
+ 
+    [Theory]
+    [InlineData(3500, 800)]
+    [InlineData(4500, 950)]
+    [InlineData(6000, 1380)]
+    public async Task Annual_Consumption_3500(int consumption, decimal output)
     {
         //Setup
-        int consumption = 3500;
-
         var requestBuilder = NewRequest
            .AddRoute($"product/{consumption}");
 
@@ -33,47 +34,7 @@ public class AnnualConsumptionTest : IntegrationTestBase
 
         product.Should().NotBeNull();
 
-        product.AnnualCost.Should().Be(800);
-    }
-
-    [Fact]
-    public async Task Annual_Consumption_4500()
-    {
-        //Setup        
-        int consumption = 4500;
-
-        var requestBuilder = NewRequest
-          .AddRoute($"product/{consumption}");
-
-        var products = await requestBuilder.Get<IEnumerable<ProductDTO>>();
-
-        products.Should().NotBeNull();
-
-        var product = products.FirstOrDefault();
-
-        product.Should().NotBeNull();
-
-        product.AnnualCost.Should().Be(950);
-    }
-
-    [Fact]
-    public async Task Annual_Consumption_6000()
-    {
-        int consumption = 6000;
-
-        var requestBuilder = NewRequest
-          .AddRoute($"product/{consumption}");
-
-        var products = await requestBuilder.Get<IEnumerable<ProductDTO>>();
-
-        products.Should().NotBeNull();
-
-        var product = products.FirstOrDefault();
-
-        product.Should().NotBeNull();
-
-        product.AnnualCost.Should().Be(1380);
-
+        product.AnnualCost.Should().Be(output);
     }
 
     [Fact]
