@@ -4,32 +4,31 @@ using FluentAssertions;
 using Xunit;
 using static Domain.Entities.Product;
 
-namespace UnitTest
+namespace UnitTest;
+
+public class PackagedTariffTest
 {
-    public class PackagedTariffTest
+    private readonly ITariffFactory _tariffFactory;
+
+    public PackagedTariffTest()
     {
-        private readonly ITariffFactory _tariffFactory;
+        _tariffFactory = new TariffFactory();
+    }
 
-        public PackagedTariffTest()
-        {
-            _tariffFactory = new TariffFactory();
-        }
+    [Theory]
+    [InlineData(3500, 30, 800)]
+    [InlineData(4500, 30, 950)]
+    [InlineData(6000, 30, 1400)]
+    [InlineData(5000, 0, 800)]
+    [InlineData(-1, 30, 0)]
+    public void CalculateAnnualCost_MultipleConsumptions_ReturnsAnnualCosts(int consumption, decimal costPerKWh, decimal output)
+    {
+        Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, costPerKWh);
 
-        [Theory]
-        [InlineData(3500, 30, 800)]
-        [InlineData(4500, 30, 950)]
-        [InlineData(6000, 30, 1400)]
-        [InlineData(5000, 0, 800)]
-        [InlineData(-1, 30, 0)]
-        public void CalculateAnnualCost_MultipleConsumptions_ReturnsAnnualCosts(int consumption, decimal costPerKWh, decimal output)
-        {
-            Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, costPerKWh);
+        var tariff = _tariffFactory.Create(product.Type);
 
-            var tariff = _tariffFactory.Create(product.Type);
+        var annualCost = tariff.CalculateAnnualCost(product, consumption);
 
-            var annualCost = tariff.CalculateAnnualCost(product, consumption);
-
-            annualCost.Should().Be(output);
-        }
+        annualCost.Should().Be(output);
     }
 }
