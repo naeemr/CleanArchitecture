@@ -20,7 +20,7 @@ public class AnnualConsumptionTest : IntegrationTestBase
     [InlineData(3500, 800)]
     [InlineData(4500, 950)]
     [InlineData(6000, 1380)]
-    public async Task Annual_Consumption_3500(int consumption, decimal output)
+    public async Task Products_MultipleConsumptions_ReturnsProductsWithDifferentTariffs(int consumption, decimal output)
     {
         //Setup
         var requestBuilder = NewRequest
@@ -38,7 +38,7 @@ public class AnnualConsumptionTest : IntegrationTestBase
     }
 
     [Fact]
-    public async Task Annual_Consumption_Negative_Value()
+    public async Task Products_NegativeValue_ProductsWithDifferentTariffs()
     {
         int consumption = -1;
 
