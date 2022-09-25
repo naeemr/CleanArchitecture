@@ -2,11 +2,6 @@
 
 namespace Application.Products.Queries;
 
-public interface IProductQueryUseCase
-{
-    Task<IEnumerable<GetProducts>> GetProducts(int consumption);
-}
-
 public class ProductQueryUseCase : IProductQueryUseCase
 {
     private readonly IProductRepository _productRepository;
@@ -19,29 +14,40 @@ public class ProductQueryUseCase : IProductQueryUseCase
         _tariffFactory = tariffFactory;
     }
 
-    public async Task<IEnumerable<GetProducts>> GetProducts(int consumption)
+    public async Task<ApiResponse<List<GetProducts>>> GetProducts(int consumption)
     {
-        List<GetProducts> response = new();
+        var response = new ApiResponse<List<GetProducts>>();
 
         if (consumption < 0)
         {
+            response.Error = new ApiError(0, "Consumption cannot be zero");
+            response.Success = false;
             return response;
         }
 
         var products = await _productRepository.GetProducts();
 
-        if (products?.Any() == true)
+        response.Result = new();
+
+        foreach (var product in products)
         {
-            foreach (var product in products)
-            {
-                var tariff = _tariffFactory.Create(product.Type);
+            var tariff = _tariffFactory.Create(product.Type);
 
-                var annualCost = tariff.CalculateAnnualCost(product, consumption);
+            var annualCost = tariff.CalculateAnnualCost(product, consumption);
 
-                response.Add(new GetProducts(product.Name, annualCost));
-            }
+            response.Result.Add(new GetProducts(product.Name, annualCost));
         }
 
-        return response.OrderBy(p => p.AnnualCost);
+        response.Result = response.Result.OrderBy(p => p.AnnualCost).ToList();
+
+        return response;
+    }
+
+    public async Task<ApiResponse<GetProductById>> GetProductById(int id)
+    {
+        var response = new ApiResponse<GetProductById>();
+
+
+        return response;
     }
 }

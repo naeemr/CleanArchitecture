@@ -1,3 +1,4 @@
+using Application.Common.Model;
 using Application.Products.Queries;
 using FluentAssertions;
 using IntegrationTest.Infrastructure;
@@ -26,11 +27,13 @@ public class AnnualConsumptionTest : IntegrationTestBase
         var requestBuilder = NewRequest
            .AddRoute($"product/{consumption}");
 
-        var products = await requestBuilder.Get<IEnumerable<GetProducts>>();
+        var response = await requestBuilder.Get<ApiResponse<List<GetProducts>>>();
 
-        products.Should().NotBeNull();
+        response.Should().NotBeNull();
 
-        var product = products.FirstOrDefault();
+        response.Result.Should().NotBeNull();
+
+        var product = response.Result.FirstOrDefault();
 
         product.Should().NotBeNull();
 
@@ -38,17 +41,23 @@ public class AnnualConsumptionTest : IntegrationTestBase
     }
 
     [Fact]
-    public async Task Products_NegativeValue_ProductsWithDifferentTariffs()
+    public async Task Products_NegativeValue_ReturnsZero()
     {
         int consumption = -1;
 
         var requestBuilder = NewRequest
           .AddRoute($"product/{consumption}");
 
-        var products = await requestBuilder.Get<IEnumerable<GetProducts>>();
+        var response = await requestBuilder.Get<ApiResponse<List<GetProducts>>>();
 
-        products.Should().NotBeNull();
+        response.Should().NotBeNull();
 
-        products.Should().HaveCount(0);
+        response.Result.Should().NotBeNull();
+
+        var product = response.Result.FirstOrDefault();
+
+        product.Should().NotBeNull();
+
+        product.AnnualCost.Should().Be(0);
     }
 }
