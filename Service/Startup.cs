@@ -1,3 +1,5 @@
+using Service.Services;
+
 namespace Service;
 
 public class Startup

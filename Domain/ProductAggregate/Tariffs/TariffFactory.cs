@@ -9,12 +9,32 @@ public interface ITariffFactory
 
 public class TariffFactory : ITariffFactory
 {
+    private static Dictionary<string, ITariff> tariffs 
+        = new Dictionary<string, ITariff>();
+
     public ITariff Create(TariffType type)
     {
         try
         {
-            var tariff = (ITariff)Activator.CreateInstance(
-                        Type.GetType($"Domain.ProductAggregate.Tariffs.{type}Tariff"));
+            ITariff tariff;
+
+            var fullType = $"Domain.ProductAggregate.Tariffs.{type}Tariff";
+
+            if (tariffs.Any())
+            {
+                tariff = tariffs.Where(s => s.Key == fullType)
+                    .Select(s => s.Value).FirstOrDefault();
+
+                if(tariff != null)
+                {
+                    return tariff;
+                }
+            }
+            
+            tariff = (ITariff)Activator.CreateInstance(
+                        Type.GetType(fullType));
+
+            tariffs.Add(fullType, tariff);
 
             return tariff;
         }

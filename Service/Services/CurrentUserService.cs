@@ -1,4 +1,4 @@
-﻿namespace Service;
+﻿namespace Service.Services;
 
 public class CurrentUserService : ICurrentUserService
 {
