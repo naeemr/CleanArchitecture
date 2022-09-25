@@ -14,7 +14,7 @@ public class TariffFactory : ITariffFactory
         try
         {
             var tariff = (ITariff)Activator.CreateInstance(
-                        Type.GetType($"Domain.Tariffs.{type}Tariff"));
+                        Type.GetType($"Domain.ProductAggregate.Tariffs.{type}Tariff"));
 
             return tariff;
         }
