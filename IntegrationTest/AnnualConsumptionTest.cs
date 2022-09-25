@@ -41,7 +41,7 @@ public class AnnualConsumptionTest : IntegrationTestBase
     }
 
     [Fact]
-    public async Task Products_NegativeValue_ReturnsZero()
+    public async Task Products_NegativeValue_ReturnsDataNull()
     {
         int consumption = -1;
 
@@ -52,12 +52,6 @@ public class AnnualConsumptionTest : IntegrationTestBase
 
         response.Should().NotBeNull();
 
-        response.Result.Should().NotBeNull();
-
-        var product = response.Result.FirstOrDefault();
-
-        product.Should().NotBeNull();
-
-        product.AnnualCost.Should().Be(0);
+        response.Result.Should().BeNull();
     }
 }
