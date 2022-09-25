@@ -9,10 +9,10 @@ public interface IProductQueryUseCase
 
 public class ProductQueryUseCase : IProductQueryUseCase
 {
-    private readonly IProductQueryRepository _productRepository;
+    private readonly IProductRepository _productRepository;
     private readonly ITariffFactory _tariffFactory;
 
-    public ProductQueryUseCase(IProductQueryRepository productRepository,
+    public ProductQueryUseCase(IProductRepository productRepository,
         ITariffFactory tariffFactory)
     {
         _productRepository = productRepository;
