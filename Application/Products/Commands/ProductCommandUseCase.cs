@@ -1,13 +1,6 @@
-﻿using Application.Products.Queries;
-
-namespace Application.Products.Commands;
-
-public interface IProductCommandUseCase
-{
-
-}
+﻿namespace Application.Products.Commands;
 
 public class ProductCommandUseCase : IProductCommandUseCase
-{ 
+{
 
 }

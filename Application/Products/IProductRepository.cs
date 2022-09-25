@@ -1,5 +1,4 @@
-﻿
-using Domain.ProductAggregate;
+﻿using Domain.ProductAggregate;
 
 namespace Application.Products;
 

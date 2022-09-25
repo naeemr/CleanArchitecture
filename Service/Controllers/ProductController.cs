@@ -1,8 +1,6 @@
 ﻿namespace Service.Controllers;
 
-[Route("[controller]")]
-[ApiController]
-public class ProductController : ControllerBase
+public class ProductController : ApiBaseController
 {
     private readonly IProductQueryUseCase _productUseCase;
 
@@ -16,6 +14,11 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetProducts(int consumption)
     {
+        if (consumption < 0)
+        {
+            return BadRequest(new ApiError(0, "Consumption cannot be zero"));
+        }
+
         return Ok(await _productUseCase.GetProducts(consumption));
     }
 }

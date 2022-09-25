@@ -16,7 +16,7 @@ public class Startup
     {
         services.AddApplication();
 
-        services.AddPersistence(Configuration);
+        services.AddPersistence();
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

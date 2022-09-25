@@ -7,12 +7,12 @@ public interface IProductQueryUseCase
     /// </summary>
     /// <param name="consumption">consumption KWh/year</param>
     /// <returns>list of products</returns>
-    Task<ApiResponse<List<GetProducts>>> GetProducts(int consumption);
+    Task<List<GetProducts>> GetProducts(int consumption);
 
     /// <summary>
     /// Get product by id
     /// </summary>
     /// <param name="id">product id</param>
     /// <returns>product dto</returns>
-    Task<ApiResponse<GetProductById>> GetProductById(int id);
+    Task<GetProductById> GetProductById(int id);
 }

@@ -14,41 +14,29 @@ public class ProductQueryUseCase : IProductQueryUseCase
         _tariffFactory = tariffFactory;
     }
 
-    public async Task<ApiResponse<List<GetProducts>>> GetProducts(int consumption)
+    public async Task<List<GetProducts>> GetProducts(int consumption)
     {
-        var response = new ApiResponse<List<GetProducts>>();
-
-        if (consumption < 0)
-        {
-            response.Error = new ApiError(0, "Consumption cannot be zero");
-            response.Success = false;
-            return response;
-        }
-
-        response.Result = new();
+        List<GetProducts> response = new();
 
         var products = await _productRepository.GetProducts();
-      
+
         foreach (var product in products)
         {
             var tariff = _tariffFactory.Create(product.Type);
 
             var annualCost = tariff.CalculateAnnualCost(product, consumption);
 
-            response.Result.Add(new GetProducts(product.Name, annualCost));
+            response.Add(new GetProducts(product.Name, annualCost));
         }
 
-        response.Result = response.Result.OrderBy(p => p.AnnualCost).ToList();
+        response = response.OrderBy(p => p.AnnualCost).ToList();
 
         return response;
     }
 
-    public async Task<ApiResponse<GetProductById>> GetProductById(int id)
+    public async Task<GetProductById> GetProductById(int id)
     {
-        var response = new ApiResponse<GetProductById>();
 
-
-
-        return response;
+        return await Task.FromResult<GetProductById>(default);
     }
 }

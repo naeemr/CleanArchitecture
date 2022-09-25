@@ -1,5 +1,6 @@
 ﻿global using Application;
 global using Application.Common.Interfaces;
+global using Application.Common.Model;
 global using Application.Products.Queries;
 global using Infrastructure;
 global using Infrastructure.Persistence;

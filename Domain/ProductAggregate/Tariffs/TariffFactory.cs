@@ -9,8 +9,7 @@ public interface ITariffFactory
 
 public class TariffFactory : ITariffFactory
 {
-    private static Dictionary<string, ITariff> tariffs 
-        = new Dictionary<string, ITariff>();
+    private readonly static Dictionary<string, ITariff> tariffs = new();
 
     public ITariff Create(TariffType type)
     {
@@ -25,12 +24,12 @@ public class TariffFactory : ITariffFactory
                 tariff = tariffs.Where(s => s.Key == fullType)
                     .Select(s => s.Value).FirstOrDefault();
 
-                if(tariff != null)
+                if (tariff != null)
                 {
                     return tariff;
                 }
             }
-            
+
             tariff = (ITariff)Activator.CreateInstance(
                         Type.GetType(fullType));
 

@@ -2,7 +2,6 @@ using Application.Common.Model;
 using Application.Products.Queries;
 using FluentAssertions;
 using IntegrationTest.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +27,7 @@ public class AnnualConsumptionTest : IntegrationTestBase
         var requestBuilder = NewRequest
            .AddRoute($"product/{consumption}");
 
-        var response = await requestBuilder.Get<ApiResponse<List<GetProducts>>>();
+        var response = await requestBuilder.Get<ApiResponse<List<GetProducts>>>(false);
 
         response.Should().NotBeNull();
 
@@ -49,7 +48,7 @@ public class AnnualConsumptionTest : IntegrationTestBase
         var requestBuilder = NewRequest
           .AddRoute($"product/{consumption}");
 
-        var response = await requestBuilder.Get<ApiResponse<List<GetProducts>>>();
+        var response = await requestBuilder.Get<ApiResponse<List<GetProducts>>>(false);
 
         response.Should().NotBeNull();
 

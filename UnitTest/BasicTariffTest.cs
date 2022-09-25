@@ -23,7 +23,7 @@ public class BasicTariffTest
     [InlineData(-1, 22, 0)]
     public void CalculateAnnualCost_MultipleConsumptions_ReturnsAnnualCosts(int consumption, decimal costPerKWh, decimal output)
     {
-        Product product = new Product("basic electricity tariff", TariffType.Basic, 0, 5m, costPerKWh);
+        Product product = new("basic electricity tariff", TariffType.Basic, 0, 5m, costPerKWh);
 
         var tariff = _tariffFactory.Create(product.Type);
 

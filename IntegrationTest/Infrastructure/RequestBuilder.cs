@@ -32,6 +32,7 @@ public class RequestBuilder
     {
         return new StringContent(JsonUtils.Serialize(content), Encoding.UTF8, "application/json");
     }
+
     private static StringContent ToStringContent(string content)
     {
         return new StringContent(content, Encoding.UTF8, "application/json");
@@ -48,37 +49,41 @@ public class RequestBuilder
 
     private static void ThrowIfError(HttpResponseMessage message)
     {
-
         if (message.IsSuccessStatusCode == false)
         {
             var responseContent = message.Content.ReadAsStringAsync().Result;
             throw new HttpRequestException($"Could not make {message.RequestMessage?.Method.ToString() ?? "UNKNOWN METHOD"} Request.\n{responseContent}");
         }
     }
+
     public async Task<T> Get<T>(bool throwOnError = true)
     {
         var response = await GetResponse();
         if (throwOnError) ThrowIfError(response);
         return await response.DeserializeContent<T>();
     }
+
     public async Task<HttpResponseMessage> Post<T>(T content, bool throwOnError = true) where T : class
     {
         var response = await _httpClient.PostAsync(BuildUrl(), ToStringContent(content));
         if (throwOnError) ThrowIfError(response);
         return response;
     }
+
     public async Task<HttpResponseMessage> Post(bool throwOnError = true)
     {
         var response = await _httpClient.PostAsync(BuildUrl(), ToStringContent("{}"));
         if (throwOnError) ThrowIfError(response);
         return response;
     }
+
     public async Task<HttpResponseMessage> Put<T>(T content, bool throwOnError = true) where T : class
     {
         var response = await _httpClient.PutAsync(BuildUrl(), ToStringContent(content));
         if (throwOnError) ThrowIfError(response);
         return response;
     }
+
     public async Task<HttpResponseMessage> Delete(bool throwOnError = true)
     {
         var response = await _httpClient.DeleteAsync(BuildUrl());
