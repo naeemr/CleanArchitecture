@@ -6,6 +6,11 @@ public class ApiError
     public string ErrorMessage { get; set; }
     public string Help { get; set; }
 
+    public ApiError()
+    {
+
+    }
+
     public ApiError(int code, string message, string help = "")
     {
         ErrorCode = code;

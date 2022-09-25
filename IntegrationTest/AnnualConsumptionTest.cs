@@ -2,6 +2,7 @@ using Application.Common.Model;
 using Application.Products.Queries;
 using FluentAssertions;
 using IntegrationTest.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,12 +17,12 @@ public class AnnualConsumptionTest : IntegrationTestBase
     {
 
     }
-    
+
     [Theory]
     [InlineData(3500, 800)]
     [InlineData(4500, 950)]
     [InlineData(6000, 1380)]
-    public async Task Products_MultipleConsumptions_ReturnsProductsWithDifferentTariffs(int consumption, decimal output)
+    public async Task Products_MultipleConsumptions_ReturnsProducts(int consumption, decimal output)
     {
         //Setup
         var requestBuilder = NewRequest

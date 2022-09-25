@@ -9,6 +9,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddScoped<IProductQueryUseCase, ProductQueryUseCase>();
+
         services.AddScoped<IProductCommandUseCase, ProductCommandUseCase>();
 
         services.AddScoped<ITariffFactory, TariffFactory>();

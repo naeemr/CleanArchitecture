@@ -25,10 +25,10 @@ public class ProductQueryUseCase : IProductQueryUseCase
             return response;
         }
 
-        var products = await _productRepository.GetProducts();
-
         response.Result = new();
 
+        var products = await _productRepository.GetProducts();
+      
         foreach (var product in products)
         {
             var tariff = _tariffFactory.Create(product.Type);
@@ -46,6 +46,7 @@ public class ProductQueryUseCase : IProductQueryUseCase
     public async Task<ApiResponse<GetProductById>> GetProductById(int id)
     {
         var response = new ApiResponse<GetProductById>();
+
 
 
         return response;
