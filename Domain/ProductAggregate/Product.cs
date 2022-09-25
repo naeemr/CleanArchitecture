@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities;
+﻿namespace Domain.ProductAggregate;
 
 public class Product : BaseEntity, IAggregateRoot
 {

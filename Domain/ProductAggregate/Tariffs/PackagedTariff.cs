@@ -1,4 +1,4 @@
-﻿namespace Domain.Tariffs;
+﻿namespace Domain.ProductAggregate.Tariffs;
 
 public sealed class PackagedTariff : ITariff
 {

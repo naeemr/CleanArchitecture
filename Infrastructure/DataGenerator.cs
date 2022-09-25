@@ -1,4 +1,6 @@
-﻿using static Domain.Entities.Product;
+﻿using Domain.ProductAggregate;
+using Infrastructure.Persistence;
+using static Domain.ProductAggregate.Product;
 
 namespace Infrastructure;
 

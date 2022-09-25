@@ -1,7 +1,5 @@
 ﻿global using Application.Common.Interfaces;
-global using Application.Products.Queries;
 global using Domain;
-global using Domain.Tariffs;
 global using Microsoft.Extensions.DependencyInjection;
 global using System;
 global using System.Collections.Generic;

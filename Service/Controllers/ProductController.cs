@@ -2,17 +2,17 @@
 
 public class ProductController : ApiControllerBase
 {
-    private readonly IGetProductsHandler _productsHandler;
+    private readonly IProductQueryUseCase _productUseCase;
 
-    public ProductController(IGetProductsHandler productsHandler)
+    public ProductController(IProductQueryUseCase productUseCase)
     {
-        _productsHandler = productsHandler;
+        _productUseCase = productUseCase;
     }
 
     [HttpGet]
     [Route("{consumption}")]
     public async Task<IActionResult> GetProducts(int consumption)
     {
-        return Ok(await _productsHandler.Handle(consumption));
+        return Ok(await _productUseCase.GetProducts(consumption));
     }
 }

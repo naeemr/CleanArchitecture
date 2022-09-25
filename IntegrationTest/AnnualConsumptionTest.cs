@@ -15,7 +15,7 @@ public class AnnualConsumptionTest : IntegrationTestBase
     {
 
     }
- 
+    
     [Theory]
     [InlineData(3500, 800)]
     [InlineData(4500, 950)]
@@ -26,7 +26,7 @@ public class AnnualConsumptionTest : IntegrationTestBase
         var requestBuilder = NewRequest
            .AddRoute($"product/{consumption}");
 
-        var products = await requestBuilder.Get<IEnumerable<ProductDTO>>();
+        var products = await requestBuilder.Get<IEnumerable<GetProducts>>();
 
         products.Should().NotBeNull();
 
@@ -45,7 +45,7 @@ public class AnnualConsumptionTest : IntegrationTestBase
         var requestBuilder = NewRequest
           .AddRoute($"product/{consumption}");
 
-        var products = await requestBuilder.Get<IEnumerable<ProductDTO>>();
+        var products = await requestBuilder.Get<IEnumerable<GetProducts>>();
 
         products.Should().NotBeNull();
 

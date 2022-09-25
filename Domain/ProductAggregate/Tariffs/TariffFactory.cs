@@ -1,6 +1,6 @@
-﻿using static Domain.Entities.Product;
+﻿using static Domain.ProductAggregate.Product;
 
-namespace Domain.Tariffs;
+namespace Domain.ProductAggregate.Tariffs;
 
 public interface ITariffFactory
 {

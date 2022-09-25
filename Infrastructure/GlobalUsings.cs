@@ -1,8 +1,4 @@
-﻿global using Application.Common.Interfaces;
-global using Application.Products;
-global using Domain;
-global using Domain.Entities;
-global using Infrastructure.Persistence;
+﻿global using Domain;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.ChangeTracking;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;

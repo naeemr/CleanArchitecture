@@ -1,4 +1,7 @@
-﻿namespace Infrastructure.Persistence;
+﻿using Application.Common.Interfaces;
+using Domain.ProductAggregate;
+
+namespace Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext
 {

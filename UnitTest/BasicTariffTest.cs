@@ -1,8 +1,8 @@
-using Domain.Entities;
-using Domain.Tariffs;
+using Domain.ProductAggregate;
+using Domain.ProductAggregate.Tariffs;
 using FluentAssertions;
 using Xunit;
-using static Domain.Entities.Product;
+using static Domain.ProductAggregate.Product;
 
 namespace UnitTest;
 
