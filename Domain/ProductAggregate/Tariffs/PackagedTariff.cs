@@ -4,7 +4,7 @@ public sealed class PackagedTariff : ITariff
 {
     public decimal CalculateAnnualCost(Product product, int consumption)
     {
-        if (consumption < 0)
+        if (consumption <= 0)
         {
             return default;
         }

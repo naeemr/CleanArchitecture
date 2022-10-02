@@ -18,9 +18,10 @@ public class PackagedTariffTest
     [Theory]
     [InlineData(3500, 30, 800)]
     [InlineData(4500, 30, 950)]
-    [InlineData(6000, 30, 1400)]
-    [InlineData(5000, 0, 800)]
+    [InlineData(6000, 30, 1400)]   
+    [InlineData(0, 30, 0)]
     [InlineData(-1, 30, 0)]
+    [InlineData(5000, 0, 800)]
     public void CalculateAnnualCost_MultipleConsumptions_ReturnsAnnualCosts(int consumption, decimal costPerKWh, decimal output)
     {
         Product product = new("Packaged tariff", TariffType.Packaged, 4000, 800m, costPerKWh);
