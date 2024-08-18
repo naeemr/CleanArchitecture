@@ -1,76 +1,71 @@
-using Service.Services;
+using Service.Infrastructure;
+using Service.Infrastructure.Persistence;
 
 namespace Service;
 
 public class Startup
 {
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
+	public Startup(IConfiguration configuration)
+	{
+		Configuration = configuration;
+	}
 
-    public IConfiguration Configuration { get; }
+	public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddApplication();
+	// This method gets called by the runtime. Use this method to add services to the container.
+	public void ConfigureServices(IServiceCollection services)
+	{
+		services.RegisterDependencies(Configuration);
 
-        services.AddPersistence();
+		services.AddControllers();
 
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+		services.AddSwaggerGen(c =>
+		{
+			c.SwaggerDoc("v1", new OpenApiInfo
+			{
+				Title = "Services",
+				Version = "v1"
+			});
+		});
+	}
 
-        services.AddSingleton<ICurrentUserService, CurrentUserService>();
+	// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+	{
+		if (env.IsDevelopment())
+		{
+			app.UseDeveloperExceptionPage();
+			app.UseSwagger();
+			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
+				"Services v1"));
 
-        services.AddControllers();
+			CreateDatabase(app);
+		}
 
-        services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Title = "Services",
-                Version = "v1"
-            });
-        });
-    }
+		//app.UseHttpsRedirection();
+		app.UseRouting();
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        if (env.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                "Services v1"));
+		// global cors policy
+		app.UseCors(x => x
+			.AllowAnyMethod()
+			.AllowAnyHeader()
+			.AllowAnyOrigin());
 
-            CreateDatabase(app);
-        }
+		app.UseEndpoints(endpoints =>
+		{
+			endpoints.MapControllers();
+		});
+	}
 
-        //app.UseHttpsRedirection();
-        app.UseRouting();
+	private static void CreateDatabase(IApplicationBuilder appBuilder)
+	{
+		using var scope = appBuilder.ApplicationServices.CreateScope();
+		var services = scope.ServiceProvider;
+		var context = services.GetRequiredService<ApplicationDbContext>();
 
-        // global cors policy
-        app.UseCors(x => x
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowAnyOrigin());
+		context.Database.EnsureDeleted();
+		context.Database.EnsureCreated();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
-    }
-
-    private static void CreateDatabase(IApplicationBuilder appBuilder)
-    {
-        using var scope = appBuilder.ApplicationServices.CreateScope();
-        var services = scope.ServiceProvider;
-        var context = services.GetRequiredService<ApplicationDbContext>();
-
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
-
-        context.CreateData();
-    }
+		context.CreateData();
+	}
 }

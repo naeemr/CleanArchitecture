@@ -1,57 +1,99 @@
-using Application.Common.Model;
-using Application.Products.Queries;
 using FluentAssertions;
 using IntegrationTest.Infrastructure;
+using Service.Application.Common.Model;
+using Service.Application.Products;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Reflection;
 
 namespace IntegrationTest;
 
 public class AnnualConsumptionTest : IntegrationTestBase
 {
-    public AnnualConsumptionTest(IntegrationTestFixture integrationTestFixture)
-        : base(integrationTestFixture)
-    {
+	public AnnualConsumptionTest(IntegrationTestFixture integrationTestFixture)
+		: base(integrationTestFixture)
+	{
 
-    }
+	}
 
-    [Theory]
-    [InlineData(3500, 800)]
-    [InlineData(4500, 950)]
-    [InlineData(6000, 1380)]
-    public async Task Products_MultipleConsumptions_ReturnsProducts(int consumption, decimal output)
-    {
-        //Setup
-        var requestBuilder = NewRequest
-           .AddRoute($"product/{consumption}");
+	private readonly JsonSerializerSettings _defaultSettings
+		= new()
+		{
+			ContractResolver = new PrivateResolver(),
+			NullValueHandling = NullValueHandling.Ignore
+		};
 
-        var response = await requestBuilder.Get<ApiResponse<List<GetProducts>>>(false);
+	[Theory]
+	[InlineData(3500, 800)]
+	[InlineData(4500, 950)]
+	[InlineData(6000, 1380)]
+	public async Task GetProducts_MultipleConsumptions_ReturnsProductsTariff(int consumption, decimal output)
+	{
+		// Arrange
+		var requestBuilder = NewRequest
+		   .AddRoute($"product/{consumption}");
 
-        response.Should().NotBeNull();
+		// Act
+		var response = await requestBuilder.Get(false);
 
-        response.Result.Should().NotBeNull();
+		var content = await response.Content.ReadAsStringAsync();
 
-        var product = response.Result.FirstOrDefault();
+		ApiResponse<List<ProductModel>> apiResponse = 
+			JsonConvert.DeserializeObject<ApiResponse<List<ProductModel>>>(content, _defaultSettings);
 
-        product.Should().NotBeNull();
+		// Assert
+		apiResponse.Result.Should().NotBeNull();
 
-        product.AnnualCost.Should().Be(output);
-    }
+		apiResponse.Result.Should().NotBeNull();
 
-    [Fact]
-    public async Task Products_NegativeValue_ReturnsDataNull()
-    {
-        int consumption = -1;
+		var product = apiResponse.Result.FirstOrDefault();
 
-        var requestBuilder = NewRequest
-          .AddRoute($"product/{consumption}");
+		product.Should().NotBeNull();
 
-        var response = await requestBuilder.Get<ApiResponse<List<GetProducts>>>(false);
+		product.TotalAnnualCost.Should().Be(output);
+	}
 
-        response.Should().NotBeNull();
+	[Fact]
+	public async Task GetProducts_NegativeValue_ReturnsProductsTariff()
+	{
+		// Arrange
+		int consumption = -1;
 
-        response.Result.Should().BeNull();
-    }
+		var requestBuilder = NewRequest
+		  .AddRoute($"product/{consumption}");
+
+		// Act
+		var response = await requestBuilder.Get(false);
+
+		var content = await response.Content.ReadAsStringAsync();
+
+		ApiResponse<List<ProductModel>> apiResponse = 
+			JsonConvert.DeserializeObject<ApiResponse<List<ProductModel>>>(content, _defaultSettings);
+
+		// Assert
+		response.Should().NotBeNull();
+
+		apiResponse.Result.Should().BeNull();
+	}
+
+	public class PrivateResolver : DefaultContractResolver
+	{
+		protected override JsonProperty CreateProperty(
+			MemberInfo member,
+			MemberSerialization memberSerialization)
+		{
+			var prop = base.CreateProperty(member, memberSerialization);
+			if (!prop.Writable)
+			{
+				var property = member as PropertyInfo;
+				var hasPrivateSetter = property?.GetSetMethod(true) != null;
+				prop.Writable = hasPrivateSetter;
+			}
+			return prop;
+		}
+	}
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Service.Application.Common.Model;
 
 namespace Service.Controllers;
 
@@ -6,40 +7,40 @@ namespace Service.Controllers;
 [ApiController]
 public class ApiBaseController : ControllerBase
 {
-    public override OkObjectResult Ok([ActionResultObjectValue] object value)
-    {
-        ApiResponse<object> response = new();
+	public override OkObjectResult Ok([ActionResultObjectValue] object value)
+	{
+		ApiResponse<object> response = new();
 
-        response.Result = value;
+		response.Result = value;
 
-        response.StatusCode = StatusCodes.Status200OK;
+		response.StatusCode = StatusCodes.Status200OK;
 
-        return base.Ok(response);
-    }
+		return base.Ok(response);
+	}
 
-    public override BadRequestObjectResult BadRequest([ActionResultObjectValue] object error)
-    {
-        ApiResponse<object> response = new();
+	public override BadRequestObjectResult BadRequest([ActionResultObjectValue] object error)
+	{
+		ApiResponse<object> response = new();
 
-        response.Error = (ApiError)error;
+		response.Error = (ApiError)error;
 
-        response.StatusCode = StatusCodes.Status400BadRequest;
+		response.StatusCode = StatusCodes.Status400BadRequest;
 
-        response.Success = false;
+		response.Success = false;
 
-        return base.BadRequest(response);
-    }
+		return base.BadRequest(response);
+	}
 
-    public override ConflictObjectResult Conflict([ActionResultObjectValue] object error)
-    {
-        ApiResponse<object> response = new();
+	public override ConflictObjectResult Conflict([ActionResultObjectValue] object error)
+	{
+		ApiResponse<object> response = new();
 
-        response.Error = (ApiError)error;
+		response.Error = (ApiError)error;
 
-        response.StatusCode = StatusCodes.Status409Conflict;
+		response.StatusCode = StatusCodes.Status409Conflict;
 
-        response.Success = false;
+		response.Success = false;
 
-        return base.Conflict(response);
-    }
+		return base.Conflict(response);
+	}
 }
